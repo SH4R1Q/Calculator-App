@@ -1,0 +1,15 @@
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\net7.0\Practice_Project.exe
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\net7.0\Practice_Project.deps.json
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\net7.0\Practice_Project.runtimeconfig.json
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\net7.0\Practice_Project.dll
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\net7.0\Practice_Project.pdb
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.csproj.AssemblyReference.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.GeneratedMSBuildEditorConfig.editorconfig
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.AssemblyInfoInputs.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.AssemblyInfo.cs
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.csproj.CoreCompileInputs.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.dll
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\refint\Practice_Project.dll
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.pdb
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\Practice_Project.genruntimeconfig.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\net7.0\ref\Practice_Project.dll
