@@ -11,9 +11,9 @@ namespace AlgebraLibrary
         protected override double EvaluateCore(double[] expression)
         {
             double result = 1.0;
-            for (int i = 1; i < expression.Length; i++)
+            for (int expressionIndex = 0; expressionIndex < expression.Length; expressionIndex++)
             {
-                result *= expression[i];
+                result *= expression[expressionIndex];
             }
             return result;
         }

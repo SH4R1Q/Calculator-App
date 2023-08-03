@@ -11,6 +11,7 @@ namespace AlgebraLibrary
     public interface IOperation
     {
        int OperandCount { get; set; }
+       int Precedence { get; set; }
        double Evaluate(double[] expression);
     }
 }

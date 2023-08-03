@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Assignment/Calculator/Library/AlgebraLibrary/.vs
+/Assignment/Calculator/Library/AlgebraLibrary/AlgebraLibrary/.vs
+/Assignment/Calculator/Library/AlgebraLibrary/AlgebraLibrary/bin/Debug
+/Assignment/Calculator/Library/AlgebraLibrary/AlgebraLibrary/obj
+/.vs
+/Assignment/Calculator/Library/.vs
+/Assignment/Calculator/Library/AlgebraLibrary/AlgebraLibrary.Tests/bin/Debug
+/Assignment/Calculator/Library/AlgebraLibrary/AlgebraLibrary.Tests/obj/Debug
+/Assignment/Calculator/Library/AlgebraLibrary/TestApp/.vs
+/Assignment/Calculator/Library/AlgebraLibrary/TestApp/TestApp/bin/Debug
+/Assignment/Calculator/Library/AlgebraLibrary/TestApp/TestApp/obj

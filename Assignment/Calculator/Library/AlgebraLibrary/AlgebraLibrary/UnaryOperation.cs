@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgebraLibrary.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,28 @@ namespace AlgebraLibrary
     public abstract class UnaryOperation : IOperation
     {
         private int _operandCount;
+        private int _precedence;
+
+        public UnaryOperation()
+        {
+            _operandCount = 1;
+        }
         public int OperandCount
         {
             get => _operandCount;
-            set => _operandCount = 1;
+            set => _operandCount = value;
+        }
+        public int Precedence
+        {
+            get => _precedence; 
+            set => _precedence = value;
         }
         public void Validate(double[] expression)
         {
             if (expression.Length < OperandCount)
-            { }
-            throw new ArgumentException(String.Format("SYNTAX ERROR"), "expression");
+            {
+                throw new ArgumentException(Resources.WrongSyntax);
+            }
         }
         public double Evaluate(double[] expression)
         {
