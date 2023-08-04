@@ -61,7 +61,16 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SEEMS LIKE SOME BRACKETS ARE MISSING.
+        ///   Looks up a localized string similar to Nothing To Evaluate.
+        /// </summary>
+        internal static string EmptyExpression {
+            get {
+                return ResourceManager.GetString("EmptyExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seems Like Some Brackets Are Missing.
         /// </summary>
         internal static string ParenthesisMismatch {
             get {

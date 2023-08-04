@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmptyExpression" xml:space="preserve">
+    <value>Nothing To Evaluate</value>
+  </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
-    <value>SEEMS LIKE SOME BRACKETS ARE MISSING</value>
+    <value>Seems Like Some Brackets Are Missing</value>
   </data>
   <data name="StartingWithOperator" xml:space="preserve">
     <value>Expression can not start with a Binary Operator</value>

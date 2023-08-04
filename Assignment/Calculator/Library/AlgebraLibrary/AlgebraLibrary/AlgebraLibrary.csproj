@@ -44,7 +44,9 @@
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperation.cs" />
     <Compile Include="Division.cs" />
+    <Compile Include="EmptyExpressionException.cs" />
     <Compile Include="ExpressionEvaluator.cs" />
+    <Compile Include="Factorial.cs" />
     <Compile Include="IOperation.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="PostfixConverter.cs" />
@@ -55,9 +57,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Reciprocal.cs" />
+    <Compile Include="SquareRoot.cs" />
+    <Compile Include="StartingWithBinaryOperatorException.cs" />
     <Compile Include="Subtraction.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="UnaryOperation.cs" />
+    <Compile Include="WrongParenthesisException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

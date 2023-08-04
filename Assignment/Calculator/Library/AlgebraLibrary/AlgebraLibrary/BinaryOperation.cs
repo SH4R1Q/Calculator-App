@@ -26,18 +26,18 @@ namespace AlgebraLibrary
             get => _precedence; 
             set => _precedence = value;
         }
-        public void Validate(double[] expression)
+        public void Validate(double[] operands)
         {
-            if (expression.Length < OperandCount)
+            if (operands.Length < OperandCount)
             {
                 throw new ArgumentException(Resources.WrongSyntax);
             }
         }
-        public double Evaluate(double[] expression)
+        public double Evaluate(double[] operands)
         {
-            Validate(expression);
-            return EvaluateCore(expression);
+            Validate(operands);
+            return EvaluateCore(operands);
         }
-        protected abstract double EvaluateCore(double[] expression);
+        protected abstract double EvaluateCore(double[] operands);
     }
 }

@@ -34,11 +34,24 @@ namespace AlgebraLibrary
             get => _precedence; 
             set => _precedence = value;
         }
+        public override bool Equals(object obj)
+        {
+            if(obj is Token typeToken)
+            {
+                return Symbol==typeToken.Symbol && Type==typeToken.Type && Precedence==typeToken.Precedence;
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return (Symbol, Type, Precedence).GetHashCode();
+        }
     }
     public enum TokenType
     {
         UnaryOperator,
         BinaryOperator,
-        Number
+        Number,
+        Parenthesis
     }
 }

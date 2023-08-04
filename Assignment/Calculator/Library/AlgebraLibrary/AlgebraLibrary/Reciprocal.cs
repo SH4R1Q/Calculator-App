@@ -8,9 +8,9 @@ namespace AlgebraLibrary
 {
     public class Reciprocal : UnaryOperation
     {
-        protected override double EvaluateCore(double[] expression)
+        protected override double EvaluateCore(double[] operands)
         {
-            return 1 / expression[0];
+            return 1 / operands[0];
         }
     }
 }

@@ -12,6 +12,6 @@ namespace AlgebraLibrary
     {
        int OperandCount { get; set; }
        int Precedence { get; set; }
-       double Evaluate(double[] expression);
+       double Evaluate(double[] operands);
     }
 }

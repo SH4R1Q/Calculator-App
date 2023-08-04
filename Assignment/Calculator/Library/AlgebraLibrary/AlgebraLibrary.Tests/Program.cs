@@ -11,7 +11,7 @@ namespace AlgebraLibrary.Tests
         static void Main(string[] args)
         {
             //double[] exp = {16, 4};
-            string exp = "3+2+5";
+            string exp = "fact(5-2)";
             /*
             Addition add = new Addition();
             Subtraction subtract = new Subtraction();
@@ -21,19 +21,6 @@ namespace AlgebraLibrary.Tests
             */
             ExpressionEvaluator expression = new ExpressionEvaluator();
             // PostfixConverter converter = new PostfixConverter();
-            Dictionary<Token, IOperation> operations = new Dictionary<Token, IOperation>()
-            {
-                {new Token("+", TokenType.BinaryOperator, 1), new Addition() },
-                {new Token("-", TokenType.BinaryOperator, 1), new Subtraction() },
-                {new Token("*", TokenType.BinaryOperator, 2), new Multiplication()},
-                {new Token("/", TokenType.BinaryOperator, 2), new Division()}
-            };
-            foreach (var operation in operations)
-            {
-                Console.WriteLine(operation);
-            }
-            Token @new = new Token("+",TokenType.BinaryOperator, 1);
-            Console.WriteLine(@new);
             try
             {
                 /*
@@ -42,16 +29,21 @@ namespace AlgebraLibrary.Tests
                 Console.WriteLine(multiply.Evaluate(exp));
                 Console.WriteLine(divide.Evaluate(exp));
                 Console.WriteLine(reciprocal.Evaluate(exp));
-                
+                          
                 List<Token> postFixExpression = new List<Token>();
                 postFixExpression = converter.Converter(exp);
+                List<Token> postFix = converter.Tokenizer(exp);
+                foreach(Token token in postFix)
+                {
+                    Console.WriteLine(token.Symbol + " \tis a " + token.Type + " and has a precedence of " + token.Precedence + "\n");
+                }
+
                 foreach (Token token in postFixExpression)
                 {
                     Console.WriteLine(token.Symbol + " \tis a " + token.Type + " and has a precedence of " + token.Precedence + "\n");
                 }
                 */
-
-                //Console.WriteLine(expression.Evaluate(exp));
+                Console.WriteLine(expression.Evaluate(exp));
 
             }
             catch (Exception ex)

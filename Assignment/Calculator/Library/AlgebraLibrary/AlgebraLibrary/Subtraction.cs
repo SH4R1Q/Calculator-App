@@ -8,14 +8,14 @@ namespace AlgebraLibrary
 {
     public class Subtraction : BinaryOperation
     {
-        protected override double EvaluateCore(double[] expression)
+        protected override double EvaluateCore(double[] operands)
         {
             double sum = 0;
-            for (int expressionIndex = 1; expressionIndex < expression.Length; expressionIndex++)
+            for (int operandsIndex = 1; operandsIndex < operands.Length; operandsIndex++)
             {
-                sum += expression[expressionIndex];
+                sum += operands[operandsIndex];
             }
-            return expression[0] - sum;
+            return sum - operands[0];
         }
     }
 }

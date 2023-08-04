@@ -8,17 +8,19 @@ namespace AlgebraLibrary
 {
     public class ExpressionEvaluator
     {
-        Dictionary<Token, IOperation> evaluate = new Dictionary<Token, IOperation>();
+        Dictionary<Token, IOperation> _operatorInfo = new Dictionary<Token, IOperation>();
         public ExpressionEvaluator() 
         {
-            evaluate.Add(new Token("+", TokenType.BinaryOperator, 1), new Addition());
-            evaluate.Add(new Token("-", TokenType.BinaryOperator, 1), new Subtraction());
-            evaluate.Add(new Token("*", TokenType.BinaryOperator, 2), new Multiplication());
-            evaluate.Add(new Token("/", TokenType.BinaryOperator, 2), new Division());
+            _operatorInfo.Add(new Token("+", TokenType.BinaryOperator, 2), new Addition());
+            _operatorInfo.Add(new Token("-", TokenType.BinaryOperator, 2), new Subtraction());
+            _operatorInfo.Add(new Token("*", TokenType.BinaryOperator, 3), new Multiplication());
+            _operatorInfo.Add(new Token("/", TokenType.BinaryOperator, 3), new Division());
+            _operatorInfo.Add(new Token("rcp", TokenType.UnaryOperator, 4), new Reciprocal());
+            _operatorInfo.Add(new Token("fact", TokenType.UnaryOperator, 4), new Factorial());
         }
-        public ExpressionEvaluator(Dictionary<Token, IOperation> evaluate)
+        public ExpressionEvaluator(Dictionary<Token, IOperation> _operatorInfo)
         {
-            this.evaluate = evaluate;
+            this._operatorInfo = _operatorInfo;
         }
         public double Evaluate(string expression)
         {
@@ -28,18 +30,41 @@ namespace AlgebraLibrary
             Stack<Token> evaluatorStack = new Stack<Token>();
             foreach (Token token in convertedExpression) 
             {
-                if(token.Type == TokenType.Number || token.Type == TokenType.UnaryOperator)
+                if (token.Type == TokenType.Number)
                 {
                     evaluatorStack.Push(token);
                 }
-                if(token.Type == TokenType.BinaryOperator)
+                else if (token.Type == TokenType.UnaryOperator)
                 {
-                    double[] operands = new double[evaluate[token].OperandCount];
-                    for(int arrayIndex =0; arrayIndex < operands.Length; arrayIndex++)
+                    double[] operands = new double[_operatorInfo[token].OperandCount];
+                    for (int arrayIndex = 0; arrayIndex < operands.Length; arrayIndex++)
                     {
                         operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
                     }
-                    evaluatorStack.Push(new Token(evaluate[token].Evaluate(operands).ToString(), TokenType.Number, 0));
+                    evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
+                }
+                else if (token.Type == TokenType.BinaryOperator)
+                {
+                    double[] operands = new double[_operatorInfo[token].OperandCount];
+                    for (int arrayIndex = 0; arrayIndex < operands.Length; arrayIndex++)
+                    {
+                        try
+                        {
+                            operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
+                        }
+                        catch
+                        {
+                            if (token.Symbol.Equals("+") || token.Symbol.Equals("-"))
+                            {
+                                operands[arrayIndex] = 0;
+                            }
+                            else if(token.Symbol.Equals("*"))
+                            {
+                                operands[arrayIndex] = 1;
+                            }
+                        }
+                    }
+                    evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
                 }
             }
             return Convert.ToDouble(evaluatorStack.Pop().Symbol);

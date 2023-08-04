@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AlgebraLibrary
 {
-    public class Division : BinaryOperation
+    public class Factorial : UnaryOperation
     {
         protected override double EvaluateCore(double[] operands)
         {
-            double result = operands[operands.Length - 1];
-            for (int operandsIndex = operands.Length - 2; operandsIndex >= 0; operandsIndex--)
+            double result = 1.0;
+            for(int arrayIndex = 1;  arrayIndex <= operands[0]; arrayIndex++)
             {
-                result = result / operands[operandsIndex] ;
+                result *= arrayIndex;
             }
             return result;
         }

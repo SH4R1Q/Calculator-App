@@ -8,12 +8,12 @@ namespace AlgebraLibrary
 {
     public class Multiplication : BinaryOperation
     {
-        protected override double EvaluateCore(double[] expression)
+        protected override double EvaluateCore(double[] operands)
         {
             double result = 1.0;
-            for (int expressionIndex = 0; expressionIndex < expression.Length; expressionIndex++)
+            for (int operandsIndex = 0; operandsIndex < operands.Length; operandsIndex++)
             {
-                result *= expression[expressionIndex];
+                result *= operands[operandsIndex];
             }
             return result;
         }
