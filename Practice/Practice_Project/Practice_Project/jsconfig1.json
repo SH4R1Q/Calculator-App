@@ -1,0 +1,57 @@
+[
+  {
+    "Symbol": "+",
+    "Type": 1,
+    "precedence": 2
+  },
+  {
+    "Symbol": "-",
+    "Type": 1,
+    "Precedence": 2
+  },
+  {
+    "Symbol": "*",
+    "Type": 1,
+    "Precedence": 3
+  },
+  {
+    "Symbol": "/",
+    "Type": 1,
+    "Precdence": 3
+  },
+  {
+    "Symbol": "fact",
+    "Type": 0,
+    "Precedence": 5
+  },
+  {
+    "Symbol": "rcp",
+    "Type": 0,
+    "Precedence": 5
+  },
+  {
+    "Symbol": "+",
+    "Type": 0,
+    "precedence": 4
+  },
+  {
+    "Symbol": "-",
+    "Type": 0,
+    "Precedence": 4
+  },
+  {
+    "Symbol": "sqrt",
+    "Type": 0,
+    "Precedence": 5
+  },
+  {
+    "Symbol": "sin",
+    "Type": 0,
+    "Precedence": 5
+  },
+  {
+    "Symbol": "cos",
+    "Type": 0,
+    "Precedence": 5
+  }
+]

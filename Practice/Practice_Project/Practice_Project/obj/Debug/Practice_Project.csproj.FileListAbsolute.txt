@@ -1,0 +1,11 @@
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\Practice_Project.exe.config
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\Practice_Project.exe
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\Practice_Project.pdb
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.csproj.AssemblyReference.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.csproj.SuggestedBindingRedirects.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.csproj.CoreCompileInputs.cache
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.exe
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.pdb
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\Newtonsoft.Json.dll
+D:\Shariq\Practice\Practice_Project\Practice_Project\bin\Debug\Newtonsoft.Json.xml
+D:\Shariq\Practice\Practice_Project\Practice_Project\obj\Debug\Practice_Project.csproj.CopyComplete
