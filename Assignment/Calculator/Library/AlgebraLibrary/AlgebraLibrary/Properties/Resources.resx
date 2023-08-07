@@ -120,6 +120,15 @@
   <data name="EmptyExpression" xml:space="preserve">
     <value>Nothing To Evaluate</value>
   </data>
+  <data name="FactorialError" xml:space="preserve">
+    <value>Number too large or negative</value>
+  </data>
+  <data name="NegativeRoot" xml:space="preserve">
+    <value>Can't square root a negative number</value>
+  </data>
+  <data name="OperatorOnly" xml:space="preserve">
+    <value>The Expression Contains no operands</value>
+  </data>
   <data name="ParenthesisMismatch" xml:space="preserve">
     <value>Seems Like Some Brackets Are Missing</value>
   </data>
@@ -127,6 +136,6 @@
     <value>Expression can not start with a Binary Operator</value>
   </data>
   <data name="WrongSyntax" xml:space="preserve">
-    <value>SYNTAX ERROR</value>
+    <value>Syntax Error</value>
   </data>
 </root>

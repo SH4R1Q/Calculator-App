@@ -10,12 +10,11 @@ namespace AlgebraLibrary
     {
         protected override double EvaluateCore(double[] operands)
         {
-            double result = operands[operands.Length - 1];
-            for (int operandsIndex = operands.Length - 2; operandsIndex >= 0; operandsIndex--)
+            if(operands[0] == 0) 
             {
-                result = result / operands[operandsIndex] ;
+                throw new DivideByZeroException();
             }
-            return result;
+            return operands[1]/operands[0];
         }
     }
 }

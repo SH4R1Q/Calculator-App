@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace AlgebraLibrary
 {
-    public class SquareRoot : UnaryOperation
+    public class PositiveOperator : UnaryOperation
     {
         protected override double EvaluateCore(double[] operands)
         {
-            if (operands[0] < 0)
-            {
-                throw new NegativeRootException();
-            }
-            return Math.Sqrt(operands[0]);
+            return 0+operands[0];
         }
     }
 }

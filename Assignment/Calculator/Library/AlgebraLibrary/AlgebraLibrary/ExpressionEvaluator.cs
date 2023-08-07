@@ -15,8 +15,11 @@ namespace AlgebraLibrary
             _operatorInfo.Add(new Token("-", TokenType.BinaryOperator, 2), new Subtraction());
             _operatorInfo.Add(new Token("*", TokenType.BinaryOperator, 3), new Multiplication());
             _operatorInfo.Add(new Token("/", TokenType.BinaryOperator, 3), new Division());
-            _operatorInfo.Add(new Token("rcp", TokenType.UnaryOperator, 4), new Reciprocal());
-            _operatorInfo.Add(new Token("fact", TokenType.UnaryOperator, 4), new Factorial());
+            _operatorInfo.Add(new Token("rcp", TokenType.UnaryOperator, 5), new Reciprocal());
+            _operatorInfo.Add(new Token("fact", TokenType.UnaryOperator, 5), new Factorial());
+            _operatorInfo.Add(new Token("+", TokenType.UnaryOperator, 4), new PositiveOperator());
+            _operatorInfo.Add(new Token("-", TokenType.UnaryOperator, 4), new NegativeOperator());
+            _operatorInfo.Add(new Token("sqrt", TokenType.UnaryOperator, 5), new SquareRoot());
         }
         public ExpressionEvaluator(Dictionary<Token, IOperation> _operatorInfo)
         {

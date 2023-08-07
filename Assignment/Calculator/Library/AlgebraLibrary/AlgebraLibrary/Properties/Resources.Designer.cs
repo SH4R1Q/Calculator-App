@@ -70,6 +70,33 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number too large or negative.
+        /// </summary>
+        internal static string FactorialError {
+            get {
+                return ResourceManager.GetString("FactorialError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t square root a negative number.
+        /// </summary>
+        internal static string NegativeRoot {
+            get {
+                return ResourceManager.GetString("NegativeRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Expression Contains no operands.
+        /// </summary>
+        internal static string OperatorOnly {
+            get {
+                return ResourceManager.GetString("OperatorOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seems Like Some Brackets Are Missing.
         /// </summary>
         internal static string ParenthesisMismatch {
@@ -88,7 +115,7 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SYNTAX ERROR.
+        ///   Looks up a localized string similar to Syntax Error.
         /// </summary>
         internal static string WrongSyntax {
             get {
