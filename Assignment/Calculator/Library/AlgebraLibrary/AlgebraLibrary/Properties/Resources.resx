@@ -120,6 +120,9 @@
   <data name="EmptyExpression" xml:space="preserve">
     <value>Nothing To Evaluate</value>
   </data>
+  <data name="EmptyParenthesis" xml:space="preserve">
+    <value>Expression Contains Empty Parenthesis</value>
+  </data>
   <data name="FactorialError" xml:space="preserve">
     <value>Number too large or negative</value>
   </data>

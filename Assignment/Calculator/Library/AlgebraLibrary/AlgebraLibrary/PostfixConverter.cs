@@ -61,7 +61,7 @@ namespace AlgebraLibrary
         public void IsAlphabet(ref string expression, ref string operatorName, List<Token> tokens, int index)
         {
             operatorName += expression[index];
-            if (index < expression.Length - 1 && expression[index + 1] != '(')
+            if (index < expression.Length - 1 && (expression[index + 1] != '(' && expression[index+1] != ')'))
             {
                 return;
             }
@@ -72,9 +72,20 @@ namespace AlgebraLibrary
         {
             // Parenthesis 
 
-            if (expression[index] == '(' || expression[index] == ')')
+            if (expression[index] == '(')
             {
                 tokens.Add(new Token(expression[index].ToString(), TokenType.Parenthesis, 1));
+            }
+            else if (expression[index] == ')')
+            {
+                if(tokens.Last().Type == TokenType.BinaryOperator || tokens.Last().Type == TokenType.UnaryOperator)
+                {
+                    throw new EmptyParenthesisException();
+                }
+                else
+                {
+                    tokens.Add(new Token(expression[index].ToString(), TokenType.Parenthesis, 1));
+                }
             }
             else
             {
@@ -112,6 +123,10 @@ namespace AlgebraLibrary
             if(stringExpression.Length == 0)
             {
                 throw new EmptyExpressionException();
+            }
+            else if (stringExpression.Contains("()"))
+            {
+                throw new EmptyParenthesisException();
             }
             else if (reg1.IsMatch(stringExpression) || reg3.IsMatch(stringExpression))
             {
@@ -167,13 +182,7 @@ namespace AlgebraLibrary
             {
                 Regex reg1 = new Regex(@"^[0-9]*\.{1}[0-9]+$");
                 Regex reg2 = new Regex(@"^[0-9]+\.{1}[0-9]*$");
-                if (reg1.IsMatch(operatorName))
-                {
-                    tokens.Add(new Token(operatorName, TokenType.Number, 1));
-                    operatorName = string.Empty;
-                    return;
-                }
-                else if(reg2.IsMatch(operatorName))
+                if (reg1.IsMatch(operatorName) || reg2.IsMatch(operatorName))
                 {
                     tokens.Add(new Token(operatorName, TokenType.Number, 1));
                     operatorName = string.Empty;
@@ -234,7 +243,7 @@ namespace AlgebraLibrary
         }
         public List<Token> Converter(string Expression)
         {
-            return ToPostFix(Expression);
+            return ToPostFix(Expression.ToLower());
         }
     }
 }

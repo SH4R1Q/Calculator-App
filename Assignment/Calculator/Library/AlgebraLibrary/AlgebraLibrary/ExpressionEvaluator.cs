@@ -20,6 +20,8 @@ namespace AlgebraLibrary
             _operatorInfo.Add(new Token("+", TokenType.UnaryOperator, 4), new PositiveOperator());
             _operatorInfo.Add(new Token("-", TokenType.UnaryOperator, 4), new NegativeOperator());
             _operatorInfo.Add(new Token("sqrt", TokenType.UnaryOperator, 5), new SquareRoot());
+            _operatorInfo.Add(new Token("sin", TokenType.UnaryOperator, 5), new SinFunction());
+            _operatorInfo.Add(new Token("cos", TokenType.UnaryOperator, 5), new CosFunction());
         }
         public ExpressionEvaluator(Dictionary<Token, IOperation> _operatorInfo)
         {

@@ -70,6 +70,15 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expression Contains Empty Parenthesis.
+        /// </summary>
+        internal static string EmptyParenthesis {
+            get {
+                return ResourceManager.GetString("EmptyParenthesis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number too large or negative.
         /// </summary>
         internal static string FactorialError {

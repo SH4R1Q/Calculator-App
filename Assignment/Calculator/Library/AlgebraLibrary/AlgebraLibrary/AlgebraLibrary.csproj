@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="CosFunction.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="EmptyExpressionException.cs" />
+    <Compile Include="EmptyParenthesisException.cs" />
     <Compile Include="ExpressionEvaluator.cs" />
     <Compile Include="ExtraOperatorException.cs" />
     <Compile Include="Factorial.cs" />
@@ -64,6 +66,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Reciprocal.cs" />
+    <Compile Include="SinFunction.cs" />
     <Compile Include="SquareRoot.cs" />
     <Compile Include="StartingWithBinaryOperatorException.cs" />
     <Compile Include="Subtraction.cs" />
