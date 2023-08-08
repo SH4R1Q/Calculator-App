@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="ConfigJson.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="IOperation.cs" />
     <Compile Include="Multiplication.cs" />
@@ -60,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="jsconfig1.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

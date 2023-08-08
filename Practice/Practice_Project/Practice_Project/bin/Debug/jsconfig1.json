@@ -1,0 +1,86 @@
+[
+  {
+    "Symbol": "+",
+    "Type": 1,
+    "Precedence": 2,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "-",
+    "Type": 1,
+    "Precedence": 2,
+    "ClassName": "AlgebraLibrary.Subtraction"
+  },
+  {
+    "Symbol": "*",
+    "Type": 1,
+    "Precedence": 3,
+    "ClassName": "AlgebraLibrary.Multiplication"
+  },
+  {
+    "Symbol": "/",
+    "Type": 1,
+    "Precdence": 3,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "fact",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "rcp",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "+",
+    "Type": 0,
+    "precedence": 4,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "-",
+    "Type": 0,
+    "Precedence": 4,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "sqrt",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "sin",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "cos",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "tan",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "log",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  },
+  {
+    "Symbol": "ln",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition"
+  }
+]

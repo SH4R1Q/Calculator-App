@@ -23,13 +23,29 @@ namespace Practice_Project
                 Console.WriteLine(token.Symbol+" "+token.Type+" "+token.Precedence);
             }
             */
-            List<Token> tokens = new List<Token>();
-            //string path = @"D:\Shariq\Practice\Practice_Project\Practice_Project\jsconfig1.json";
-            string jsonString = File.ReadAllText("D:\\Shariq\\Practice\\Practice_Project\\Practice_Project\\jsconfig1.json");
-            tokens  = JsonConvert.DeserializeObject<List<Token>>(jsonString);
-            foreach (Token token in tokens) 
+            List<ConfigJson> tokens = new List<ConfigJson>();
+            string path = Path.GetFullPath("jsconfig1.json");
+            string jsonString = File.ReadAllText(path);
+            tokens = JsonConvert.DeserializeObject<List<ConfigJson>>(jsonString);
+            Dictionary<Token, IOperation> operatorInfo = new Dictionary<Token, IOperation>();
+            
+            Addition add = new Addition();
+            string json = JsonConvert.SerializeObject(new ConfigJson("+", TokenType.BinaryOperator, 3, add.ToString()));
+            ConfigJson djson = JsonConvert.DeserializeObject<ConfigJson>(json);
+            Console.WriteLine(json);
+            Type className1 = Type.GetType(djson.ClassName);
+            object obj1 = Activator.CreateInstance(className1);
+            Console.WriteLine(obj1);
+            
+            foreach(var token in tokens)
             {
-                Console.WriteLine(token.Symbol + " \tis a " + token.Type + " and has a precedence of " + token.Precedence + "\n");
+                Type classType = Type.GetType(token.ClassName);
+                object obj = Activator.CreateInstance(classType);
+                operatorInfo.Add(new Token(token.Symbol, token.Type, token.Precedence), (IOperation)obj);
+            }
+            foreach(var token in operatorInfo) 
+            {
+                Console.WriteLine(token.Key+" : "+token.Value);
             }
             Console.ReadLine();
         }

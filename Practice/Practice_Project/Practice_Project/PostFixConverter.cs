@@ -7,15 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
-using AlgebraLibrary;
 
 namespace AlgebraLibrary
 {
     public class PostFixConverter
     {
+        /*
         List<Token> tokens = new List<Token>();
-        string jsonString = File.ReadAllText("D:\\Shariq\\Practice\\Practice_Project\\Practice_Project\\jsconfig1.json");
-        tokens  = JsonConvert.DeserializeObject<List<Token>>(jsonString);
+        static string path = Path.GetFullPath("jsconfig1.json");
+        string jsonString = File.ReadAllText(path);
+        tokens = JsonConvert.DeserializeObject<List<Token>>(jsonString);
+        */
         public void ParenthesisMatcher(string expression)
         {
             Stack<char> parenthesisStack = new Stack<char>();
