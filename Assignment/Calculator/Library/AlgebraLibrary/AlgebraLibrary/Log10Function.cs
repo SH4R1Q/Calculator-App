@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace AlgebraLibrary
 {
-    public class SquareRoot : UnaryOperation
+    public class Log10Function : UnaryOperation
     {
         protected override double EvaluateCore(double[] operands)
         {
             if (operands[0] < 0)
             {
-                throw new ExpressionException(Resources.NegativeRoot);
+                throw new ExpressionException(Resources.NegativeLog);
             }
-            return Math.Sqrt(operands[0]);
+            return Math.Log10(operands[0]);
         }
     }
 }

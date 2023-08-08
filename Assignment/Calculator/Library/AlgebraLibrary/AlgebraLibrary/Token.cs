@@ -20,7 +20,7 @@ namespace AlgebraLibrary
             _precedence = precedence;
         }
         public string Symbol 
-        { 
+        {
             get => _symbol;
             set => _symbol = value; 
         }

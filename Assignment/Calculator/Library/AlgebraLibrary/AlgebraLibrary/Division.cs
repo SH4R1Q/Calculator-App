@@ -10,11 +10,11 @@ namespace AlgebraLibrary
     {
         protected override double EvaluateCore(double[] operands)
         {
-            if(operands[0] == 0) 
+            if(operands[1] == 0) 
             {
                 throw new DivideByZeroException();
             }
-            return operands[1]/operands[0];
+            return operands[0]/operands[1];
         }
     }
 }

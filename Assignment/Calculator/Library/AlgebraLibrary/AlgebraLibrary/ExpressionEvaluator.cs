@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgebraLibrary.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,12 @@ namespace AlgebraLibrary
 {
     public class ExpressionEvaluator
     {
-        Dictionary<Token, IOperation> _operatorInfo = new Dictionary<Token, IOperation>();
+        private static PostfixConverter _converter = new PostfixConverter();
+        private static List<Token> _convertertedExpression = new List<Token>();
+        private Dictionary<Token, IOperation> _operatorInfo = new Dictionary<Token, IOperation>();
         public ExpressionEvaluator() 
         {
-            _operatorInfo.Add(new Token("+", TokenType.BinaryOperator, 2), new Addition());
-            _operatorInfo.Add(new Token("-", TokenType.BinaryOperator, 2), new Subtraction());
-            _operatorInfo.Add(new Token("*", TokenType.BinaryOperator, 3), new Multiplication());
-            _operatorInfo.Add(new Token("/", TokenType.BinaryOperator, 3), new Division());
-            _operatorInfo.Add(new Token("rcp", TokenType.UnaryOperator, 5), new Reciprocal());
-            _operatorInfo.Add(new Token("fact", TokenType.UnaryOperator, 5), new Factorial());
-            _operatorInfo.Add(new Token("+", TokenType.UnaryOperator, 4), new PositiveOperator());
-            _operatorInfo.Add(new Token("-", TokenType.UnaryOperator, 4), new NegativeOperator());
-            _operatorInfo.Add(new Token("sqrt", TokenType.UnaryOperator, 5), new SquareRoot());
-            _operatorInfo.Add(new Token("sin", TokenType.UnaryOperator, 5), new SinFunction());
-            _operatorInfo.Add(new Token("cos", TokenType.UnaryOperator, 5), new CosFunction());
+            
         }
         public ExpressionEvaluator(Dictionary<Token, IOperation> _operatorInfo)
         {
@@ -29,11 +22,9 @@ namespace AlgebraLibrary
         }
         public double Evaluate(string expression)
         {
-            PostfixConverter converter= new PostfixConverter();
-            List<Token> convertedExpression = new List<Token>();
-            convertedExpression = converter.Converter(expression);
+            _convertertedExpression = _converter.Converter(expression);
             Stack<Token> evaluatorStack = new Stack<Token>();
-            foreach (Token token in convertedExpression) 
+            foreach (Token token in _convertertedExpression) 
             {
                 if (token.Type == TokenType.Number)
                 {
@@ -42,16 +33,7 @@ namespace AlgebraLibrary
                 else if (token.Type == TokenType.UnaryOperator)
                 {
                     double[] operands = new double[_operatorInfo[token].OperandCount];
-                    for (int arrayIndex = 0; arrayIndex < operands.Length; arrayIndex++)
-                    {
-                        operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
-                    }
-                    evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
-                }
-                else if (token.Type == TokenType.BinaryOperator)
-                {
-                    double[] operands = new double[_operatorInfo[token].OperandCount];
-                    for (int arrayIndex = 0; arrayIndex < operands.Length; arrayIndex++)
+                    for (int arrayIndex = operands.Length -1; arrayIndex >= 0 ; arrayIndex--)
                     {
                         try
                         {
@@ -59,11 +41,27 @@ namespace AlgebraLibrary
                         }
                         catch
                         {
-                            if (token.Symbol.Equals("+") || token.Symbol.Equals("-"))
+                            operands[arrayIndex] = 0;
+                        }
+                    }
+                    evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
+                }
+                else if (token.Type == TokenType.BinaryOperator)
+                {
+                    double[] operands = new double[_operatorInfo[token].OperandCount];
+                    for (int arrayIndex = operands.Length-1; arrayIndex >= 0; arrayIndex--)
+                    {
+                        try
+                        {
+                            operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
+                        }
+                        catch
+                        {
+                            if (token.Symbol.Equals(Resources.Plus) || token.Symbol.Equals(Resources.Minus))
                             {
                                 operands[arrayIndex] = 0;
                             }
-                            else if(token.Symbol.Equals("*"))
+                            else if(token.Symbol.Equals(Resources.Multiply))
                             {
                                 operands[arrayIndex] = 1;
                             }

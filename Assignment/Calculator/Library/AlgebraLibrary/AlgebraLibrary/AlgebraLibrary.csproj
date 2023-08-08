@@ -43,20 +43,17 @@
   <ItemGroup>
     <Compile Include="Addition.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="ConfigureClass.cs" />
     <Compile Include="CosFunction.cs" />
     <Compile Include="Division.cs" />
-    <Compile Include="EmptyExpressionException.cs" />
-    <Compile Include="EmptyParenthesisException.cs" />
     <Compile Include="ExpressionEvaluator.cs" />
-    <Compile Include="ExtraOperatorException.cs" />
+    <Compile Include="ExpressionException.cs" />
     <Compile Include="Factorial.cs" />
     <Compile Include="IOperation.cs" />
-    <Compile Include="MisPlacedDecimalException.cs" />
+    <Compile Include="Log10Function.cs" />
+    <Compile Include="LogEFunction.cs" />
     <Compile Include="Multiplication.cs" />
-    <Compile Include="FactorialException.cs" />
     <Compile Include="NegativeOperator.cs" />
-    <Compile Include="NegativeRootException.cs" />
-    <Compile Include="OnlyOperatorException.cs" />
     <Compile Include="PositiveOperator.cs" />
     <Compile Include="PostfixConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,17 +65,19 @@
     <Compile Include="Reciprocal.cs" />
     <Compile Include="SinFunction.cs" />
     <Compile Include="SquareRoot.cs" />
-    <Compile Include="StartingWithBinaryOperatorException.cs" />
     <Compile Include="Subtraction.cs" />
+    <Compile Include="TanFunction.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="UnaryOperation.cs" />
-    <Compile Include="WrongParenthesisException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ConfigureLibrary.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

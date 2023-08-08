@@ -10,12 +10,7 @@ namespace AlgebraLibrary
     {
         protected override double EvaluateCore(double[] operands)
         {
-            double result = 1.0;
-            for (int operandsIndex = 0; operandsIndex < operands.Length; operandsIndex++)
-            {
-                result *= operands[operandsIndex];
-            }
-            return result;
+            return operands[0] * operands[1];
         }
     }
 }

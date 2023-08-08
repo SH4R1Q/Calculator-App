@@ -1,0 +1,86 @@
+[
+  {
+    "Symbol": "+",
+    "Type": 1,
+    "Precedence": 2,
+    "ClassName": "AlgebraLibrary.Addition, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "-",
+    "Type": 1,
+    "Precedence": 2,
+    "ClassName": "AlgebraLibrary.Subtraction, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "*",
+    "Type": 1,
+    "Precedence": 3,
+    "ClassName": "AlgebraLibrary.Multiplication, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "/",
+    "Type": 1,
+    "Precdence": 3,
+    "ClassName": "AlgebraLibrary.Division, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "fact",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Factorial, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "rcp",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Reciprocal, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "+",
+    "Type": 0,
+    "precedence": 4,
+    "ClassName": "AlgebraLibrary.PositiveOperator, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "-",
+    "Type": 0,
+    "Precedence": 4,
+    "ClassName": "AlgebraLibrary.NegativeOperator, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "sqrt",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.SquareRoot, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "sin",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.SinFunction, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "cos",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.CosFunction, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "tan",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Addition, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "log",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.Log10Function, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  },
+  {
+    "Symbol": "ln",
+    "Type": 0,
+    "Precedence": 5,
+    "ClassName": "AlgebraLibrary.LogEFunction, AlgebraLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+]

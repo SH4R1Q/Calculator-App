@@ -61,6 +61,24 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ).
+        /// </summary>
+        internal static string ClosingParenthesis {
+            get {
+                return ResourceManager.GetString("ClosingParenthesis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /.
+        /// </summary>
+        internal static string Divide {
+            get {
+                return ResourceManager.GetString("Divide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing To Evaluate.
         /// </summary>
         internal static string EmptyExpression {
@@ -88,11 +106,56 @@ namespace AlgebraLibrary.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -.
+        /// </summary>
+        internal static string Minus {
+            get {
+                return ResourceManager.GetString("Minus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decimal is not correctly placed..
+        /// </summary>
+        internal static string MisplacedDecimal {
+            get {
+                return ResourceManager.GetString("MisplacedDecimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to *.
+        /// </summary>
+        internal static string Multiply {
+            get {
+                return ResourceManager.GetString("Multiply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempt to log negatuve value.
+        /// </summary>
+        internal static string NegativeLog {
+            get {
+                return ResourceManager.GetString("NegativeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can&apos;t square root a negative number.
         /// </summary>
         internal static string NegativeRoot {
             get {
                 return ResourceManager.GetString("NegativeRoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (.
+        /// </summary>
+        internal static string OpenParenthesis {
+            get {
+                return ResourceManager.GetString("OpenParenthesis", resourceCulture);
             }
         }
         
@@ -111,6 +174,15 @@ namespace AlgebraLibrary.Properties {
         internal static string ParenthesisMismatch {
             get {
                 return ResourceManager.GetString("ParenthesisMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to +.
+        /// </summary>
+        internal static string Plus {
+            get {
+                return ResourceManager.GetString("Plus", resourceCulture);
             }
         }
         

@@ -10,12 +10,7 @@ namespace AlgebraLibrary
     {
         protected override double EvaluateCore(double[] operands)
         {
-            double sum = 0;
-            for (int operandsIndex = 1; operandsIndex < operands.Length; operandsIndex++)
-            {
-                sum += operands[operandsIndex];
-            }
-            return sum - operands[0];
+            return operands[0] - operands[1];
         }
     }
 }

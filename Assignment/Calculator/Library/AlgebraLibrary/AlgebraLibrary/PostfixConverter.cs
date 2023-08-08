@@ -1,20 +1,14 @@
 ﻿using AlgebraLibrary.Properties;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+
 
 namespace AlgebraLibrary
 {
     public class PostfixConverter
     {
-        public void IsNotNumber(Token token, Stack<Token>stack, List<Token> postFixTokens)
+        private void ProcessNonNumericCharacters(Token token, Stack<Token>stack, List<Token> postFixTokens)
         {
             if (token.Symbol.Equals("("))
             {
@@ -46,19 +40,19 @@ namespace AlgebraLibrary
                 stack.Push(token);
             }
         }
-        public void IsNotNumber(ref string expression, ref string operatorName,List<Token> tokens,int index)
+        private void ProcessNonNumericCharacters(string expression, ref string operatorName,List<Token> tokens,int index)
         {
             // Alphabets(unary operators)
             if ((int)expression[index] >= 65 && (int)expression[index] <= 90 || (int)expression[index] >= 97 && (int)expression[index] <= 122)
             {
-                IsAlphabet(ref expression,ref operatorName,tokens, index);
+                ProcessAlphabets(expression,ref operatorName,tokens, index);
             }
             else
             {
-                IsNotAlphabet(ref expression, ref operatorName, tokens, index);
+                ProcessOperators(expression, tokens, index);
             }
         }
-        public void IsAlphabet(ref string expression, ref string operatorName, List<Token> tokens, int index)
+        private void ProcessAlphabets(string expression, ref string operatorName, List<Token> tokens, int index)
         {
             operatorName += expression[index];
             if (index < expression.Length - 1 && (expression[index + 1] != '(' && expression[index+1] != ')'))
@@ -68,7 +62,7 @@ namespace AlgebraLibrary
             tokens.Add(new Token(operatorName, TokenType.UnaryOperator, 5));
             operatorName = string.Empty;
         }
-        public void IsNotAlphabet(ref string expression, ref string operatorName, List<Token> tokens, int index)
+        private void ProcessOperators(string expression, List<Token> tokens, int index)
         {
             // Parenthesis 
 
@@ -80,7 +74,7 @@ namespace AlgebraLibrary
             {
                 if(tokens.Last().Type == TokenType.BinaryOperator || tokens.Last().Type == TokenType.UnaryOperator)
                 {
-                    throw new EmptyParenthesisException();
+                    throw new ExpressionException(Resources.EmptyParenthesis);
                 }
                 else
                 {
@@ -104,44 +98,49 @@ namespace AlgebraLibrary
                 }
             }
         }
-        public void OperatorCheck(List<Token> tokenExpression)
+        private void OperatorCheck(List<Token> tokenExpression)
         {
             if (tokenExpression[0].Type == TokenType.BinaryOperator && !(tokenExpression[0].Symbol.Equals("-") || tokenExpression[0].Symbol.Equals("+")))
             {
-                throw new StartingWithBinaryOperatorException();
+                throw new ExpressionException(Resources.StartingWithOperator);
             }
             else if (tokenExpression.Last().Type == TokenType.BinaryOperator)
             {
-                throw new ExtraOperatorException();
+                throw new ExpressionException(Resources.OperatorOnly);
             }
         }
-        public void OperatorCheck(ref string stringExpression)
+        private void OperatorCheck(string stringExpression)
         {
-            Regex reg1 = new Regex(@"^.*(?=\*\/|\/\*|\-\/|\+\/|\+\*|\-\*|\/{2,}|\*{2,}|\=|\+\-\-|\-\+\+|\-{3,}|\+{3,}).*$");
-            Regex reg2 = new Regex(@"^[-+/*]{1,}$");
-            Regex reg3 = new Regex(@"^\+\+\-|^\-\-\+.*.*$");
+            Regex syntaxCheckExpression = new Regex(@"^.*(?=\*\/|\/\*|\-\/|\+\/|\+\*|\-\*|\/{2,}|\*{2,}|\=|\+\-\-|\-\+\+|\-{3,}|\+{3,}).*$");
+            Regex noOperandCheckExpression = new Regex(@"^[-+/*]{1,}$");
+            Regex extraOperatorCheckExpression = new Regex(@"^\+\+\-|^\-\-\+.*.*$");
+            Regex onlyAlphabetsCheckExpression = new Regex(@"^.+.+[a-zA-Z]{1,}$");
             if(stringExpression.Length == 0)
             {
-                throw new EmptyExpressionException();
+                throw new ExpressionException(Resources.EmptyExpression);
+            }
+            else if (onlyAlphabetsCheckExpression.IsMatch(stringExpression))
+            {
+                throw new ExpressionException(Resources.ParenthesisMismatch);
             }
             else if (stringExpression.Contains("()"))
             {
-                throw new EmptyParenthesisException();
+                throw new ExpressionException(Resources.EmptyParenthesis);
             }
-            else if (reg1.IsMatch(stringExpression) || reg3.IsMatch(stringExpression))
+            else if (syntaxCheckExpression.IsMatch(stringExpression) || extraOperatorCheckExpression.IsMatch(stringExpression))
             {
-                throw new ExtraOperatorException();
+                throw new ExpressionException(Resources.WrongSyntax);
             }
-            else if (reg2.IsMatch(stringExpression))
+            else if (noOperandCheckExpression.IsMatch(stringExpression))
             {
-                throw new OnlyOperatorException();
+                throw new ExpressionException(Resources.WrongSyntax);
             }
             else if (stringExpression[0] == '.' && !int.TryParse(stringExpression[1].ToString(),out int number))
             {
-                throw new MisPlacedDecimalException();
+                throw new ExpressionException(Resources.MisplacedDecimal);
             }
         }
-        public void ParenthesisMatcher(string expression)
+        private void ParenthesisMatcher(string expression)
         {
             Stack<char> parenthesisStack = new Stack<char>();
             for(int arrayIndex = 0; arrayIndex < expression.Length; arrayIndex++)
@@ -154,7 +153,7 @@ namespace AlgebraLibrary
                 {
                     if(parenthesisStack.Count == 0) 
                     {
-                        throw new WrongParenthesisException();
+                        throw new ExpressionException(Resources.ParenthesisMismatch);
 
                     }
                     parenthesisStack.Pop();
@@ -162,10 +161,10 @@ namespace AlgebraLibrary
             }
             if(parenthesisStack.Count > 0)
             {
-                throw new WrongParenthesisException();
+                throw new ExpressionException(Resources.ParenthesisMismatch);
             }
         }
-        public void IsNumber(ref string expression, ref string operatorName, List<Token> tokens, int index)
+        private void ProcessNumbers(string expression, ref string operatorName, List<Token> tokens, int index)
         {
             operatorName += expression[index];
             if (index < expression.Length - 1 && ((int)expression[index + 1] >= 48 && (int)expression[index + 1] <= 57))
@@ -180,9 +179,9 @@ namespace AlgebraLibrary
             // Decimal Handeling
             else if (operatorName.Contains('.'))
             {
-                Regex reg1 = new Regex(@"^[0-9]*\.{1}[0-9]+$");
-                Regex reg2 = new Regex(@"^[0-9]+\.{1}[0-9]*$");
-                if (reg1.IsMatch(operatorName) || reg2.IsMatch(operatorName))
+                Regex rightDecimalCheckExpression = new Regex(@"^[0-9]*\.{1}[0-9]+$");
+                Regex leftDecimalCheckExpression = new Regex(@"^[0-9]+\.{1}[0-9]*$");
+                if (rightDecimalCheckExpression.IsMatch(operatorName) || leftDecimalCheckExpression.IsMatch(operatorName))
                 {
                     tokens.Add(new Token(operatorName, TokenType.Number, 1));
                     operatorName = string.Empty;
@@ -190,37 +189,37 @@ namespace AlgebraLibrary
                 }
                 else
                 {
-                    throw new MisPlacedDecimalException();
+                    throw new ExpressionException(Resources.MisplacedDecimal);
                 }
             }
             tokens.Add(new Token(operatorName, TokenType.Number, 1));
             operatorName = string.Empty;
         }
-        public List<Token> Tokenizer(string inFixExpression)
+        public List<Token> ConvertToTokens(string inFixExpression)
         {
             ParenthesisMatcher(inFixExpression);
             List<Token> tokenizedExpression = new List<Token>();
             string operatorName = string.Empty;
-            OperatorCheck(ref inFixExpression);
+            OperatorCheck(inFixExpression);
             for (int arrayIndex = 0; arrayIndex < inFixExpression.Length; arrayIndex++)
             {
                 
                 if ((int)inFixExpression[arrayIndex] >= 48 && (int)inFixExpression[arrayIndex] <= 57 || inFixExpression[arrayIndex] == '.')
                 {
-                    IsNumber(ref inFixExpression, ref operatorName, tokenizedExpression, arrayIndex);
+                    ProcessNumbers(inFixExpression, ref operatorName, tokenizedExpression, arrayIndex);
                 }
                 else
                 {
-                    IsNotNumber(ref inFixExpression, ref operatorName, tokenizedExpression, arrayIndex);
+                    ProcessNonNumericCharacters(inFixExpression, ref operatorName, tokenizedExpression, arrayIndex);
                 } 
             }
             return tokenizedExpression;
 
         }
-        public List<Token> ToPostFix(string inFixExpression)
+        public List<Token> ConvertToPostFix(string inFixExpression)
         {
             List<Token> postFixTokens = new List<Token>();
-            List<Token> inFixTokens = Tokenizer(inFixExpression);
+            List<Token> inFixTokens = ConvertToTokens(inFixExpression);
             Stack<Token> operatorStack = new Stack<Token>();
             OperatorCheck(inFixTokens);
             foreach (Token token in inFixTokens)
@@ -232,7 +231,7 @@ namespace AlgebraLibrary
                 }
                 else
                 {
-                    IsNotNumber(token, operatorStack, postFixTokens);
+                    ProcessNonNumericCharacters(token, operatorStack, postFixTokens);
                 }
             }
             while (operatorStack.Count > 0)
@@ -243,7 +242,7 @@ namespace AlgebraLibrary
         }
         public List<Token> Converter(string Expression)
         {
-            return ToPostFix(Expression.ToLower());
+            return ConvertToPostFix(Expression.ToLower());
         }
     }
 }

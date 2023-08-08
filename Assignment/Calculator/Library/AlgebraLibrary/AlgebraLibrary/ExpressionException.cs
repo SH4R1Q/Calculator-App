@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 namespace AlgebraLibrary
 {
     [Serializable]
-    public class MisPlacedDecimalException : Exception
+    public class ExpressionException : Exception
     {
-        public MisPlacedDecimalException()
-            : base(Resources.WrongSyntax) { }
+        public ExpressionException() 
+        :base() { }
+
+        public ExpressionException(string message)
+            : base(message) { }
     }
 }

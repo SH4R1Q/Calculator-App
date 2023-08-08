@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlgebraLibrary.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace AlgebraLibrary
         {
             if (operands[0] < 0 || operands[0] >= 160)
             {
-                throw new FactorialException();
+                throw new ExpressionException(Resources.FactorialError);
             }
             double result = 1.0;
             for(int arrayIndex = 1;  arrayIndex <= operands[0]; arrayIndex++)

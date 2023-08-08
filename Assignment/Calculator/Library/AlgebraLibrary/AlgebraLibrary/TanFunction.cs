@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace AlgebraLibrary
 {
-    public class Addition : BinaryOperation
+    public class TanFunction : UnaryOperation
     {
         protected override double EvaluateCore(double[] operands)
         {
-            return operands[0] + operands[1];
+            double radians = (operands[0] * (Math.PI)) / 180;
+            return Math.Tan(radians);
         }
     }
 }
