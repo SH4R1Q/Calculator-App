@@ -2,21 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
+using Newtonsoft.Json;
 
 
 namespace AlgebraLibrary
 {
     public class PostfixConverter
     {
+        private static List<ConfigureClass> _validTokens =  new List<ConfigureClass>();
+        public PostfixConverter()
+        {
+            string filePath = "Properties\\ConfigurationFile.json";
+            string fileName = File.ReadAllText(filePath);
+            _validTokens = JsonConvert.DeserializeObject<List<ConfigureClass>>(fileName);
+        }
+        private void TokenCreator(string operatorName, List<Token> tokens)
+        {
+            bool flag = false;
+            foreach(ConfigureClass token in _validTokens)
+            {
+                if (token.Symbol.Equals(operatorName))
+                {
+                    flag = true;
+                    tokens.Add(new Token(token.Symbol, token.Type, token.Precedence));
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                    throw new ExpressionException(Resources.WrongSyntax);
+            }
+        }
+        private void TokenCreator(string operatorName, List<Token> tokens,TokenType type)
+        {
+            bool flag = false;
+            foreach (ConfigureClass token in _validTokens)
+            {
+                if (token.Symbol.Equals(operatorName) && token.Type == type)
+                {
+                    flag = true;
+                    tokens.Add(new Token(token.Symbol, token.Type, token.Precedence));
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new ExpressionException(Resources.WrongSyntax);
+            }       
+        }
         private void ProcessNonNumericCharacters(Token token, Stack<Token>stack, List<Token> postFixTokens)
         {
-            if (token.Symbol.Equals("("))
+            if (token.Type == TokenType.OpeningParenthesis)
             {
                 stack.Push(token);
             }
-            else if (token.Symbol.Equals(")"))
+            else if (token.Type == TokenType.ClosingParenthesis)
             {
-                while (stack.Count > 0 && !(stack.Peek().Symbol.Equals("(")))
+                while (stack.Count > 0 && !(stack.Peek().Type == TokenType.OpeningParenthesis))
                 {
                     postFixTokens.Add(stack.Pop());
                 }
@@ -59,7 +102,8 @@ namespace AlgebraLibrary
             {
                 return;
             }
-            tokens.Add(new Token(operatorName, TokenType.UnaryOperator, 5));
+            TokenCreator(operatorName, tokens);
+            //tokens.Add(new Token(operatorName, TokenType.UnaryOperator, 5));
             operatorName = string.Empty;
         }
         private void ProcessOperators(string expression, List<Token> tokens, int index)
@@ -68,7 +112,7 @@ namespace AlgebraLibrary
 
             if (expression[index] == '(')
             {
-                tokens.Add(new Token(expression[index].ToString(), TokenType.Parenthesis, 1));
+                TokenCreator(expression[index].ToString(), tokens);
             }
             else if (expression[index] == ')')
             {
@@ -78,29 +122,30 @@ namespace AlgebraLibrary
                 }
                 else
                 {
-                    tokens.Add(new Token(expression[index].ToString(), TokenType.Parenthesis, 1));
+                    TokenCreator(expression[index].ToString(), tokens);
+                    //tokens.Add(new Token(expression[index].ToString(), TokenType.ClosingParenthesis, 1));
                 }
             }
             else
             {
                 // Operators(binary operators)
-                if((expression[index] == '+' || expression[index] == '-') && (tokens.Count == 0 || tokens.Last().Type == TokenType.BinaryOperator || tokens.Last().Symbol == "("))
+                if((expression[index] == '+' || expression[index] == '-') && (tokens.Count == 0 || tokens.Last().Type == TokenType.BinaryOperator || tokens.Last().Type == TokenType.OpeningParenthesis))
                 {
-                    tokens.Add(new Token(expression[index].ToString(), TokenType.UnaryOperator, 4));
+                    TokenCreator(expression[index].ToString(), tokens, TokenType.UnaryOperator);
                 }
                 else if (expression[index] == '+' || expression[index] == '-')
                 {
-                    tokens.Add(new Token(expression[index].ToString(), TokenType.BinaryOperator, 2));
+                    TokenCreator(expression[index].ToString(), tokens, TokenType.BinaryOperator);
                 }
-                else if (expression[index] == '*' || expression[index] == '/')
+                else
                 {
-                    tokens.Add(new Token(expression[index].ToString(), TokenType.BinaryOperator, 3));
+                    TokenCreator(expression[index].ToString(), tokens);
                 }
             }
         }
         private void OperatorCheck(List<Token> tokenExpression)
         {
-            if (tokenExpression[0].Type == TokenType.BinaryOperator && !(tokenExpression[0].Symbol.Equals("-") || tokenExpression[0].Symbol.Equals("+")))
+            if (tokenExpression[0].Type == TokenType.BinaryOperator)
             {
                 throw new ExpressionException(Resources.StartingWithOperator);
             }
@@ -111,8 +156,8 @@ namespace AlgebraLibrary
         }
         private void OperatorCheck(string stringExpression)
         {
-            Regex syntaxCheckExpression = new Regex(@"^.*(?=\*\/|\/\*|\-\/|\+\/|\+\*|\-\*|\/{2,}|\*{2,}|\=|\+\-\-|\-\+\+|\-{3,}|\+{3,}).*$");
-            Regex noOperandCheckExpression = new Regex(@"^[-+/*]{1,}$");
+            Regex syntaxCheckExpression = new Regex(@"^.*(?=\*\/|\%{2,}|\/\*|\-\/|\+\/|\+\*|\-\*|\/{2,}|\*{2,}|\=|\+\-|\-\+|\-{2,}|\+{2,}|\^{2,}|\^\-|\^\+|\-\^|\+\^|\^\*|\^\*|\^\/|\/\^).*$");
+            Regex noOperandCheckExpression = new Regex(@"^[-+/*%]{1,}$");
             Regex extraOperatorCheckExpression = new Regex(@"^\+\+\-|^\-\-\+.*.*$");
             Regex onlyAlphabetsCheckExpression = new Regex(@"^.+.+[a-zA-Z]{1,}$");
             if(stringExpression.Length == 0)
@@ -135,21 +180,21 @@ namespace AlgebraLibrary
             {
                 throw new ExpressionException(Resources.WrongSyntax);
             }
-            else if (stringExpression[0] == '.' && !int.TryParse(stringExpression[1].ToString(),out int number))
+            else if ((int)stringExpression[0] == 46 && !int.TryParse(stringExpression[1].ToString(),out int number))
             {
                 throw new ExpressionException(Resources.MisplacedDecimal);
             }
         }
-        private void ParenthesisMatcher(string expression)
+        private void ParenthesisMatcher(List<Token> expression)
         {
-            Stack<char> parenthesisStack = new Stack<char>();
-            for(int arrayIndex = 0; arrayIndex < expression.Length; arrayIndex++)
+            Stack<Token> parenthesisStack = new Stack<Token>();
+            foreach(Token token in expression)
             {
-                if (expression[arrayIndex] == '(')
+                if (token.Type == TokenType.OpeningParenthesis)
                 {
-                    parenthesisStack.Push(expression[arrayIndex]);
+                    parenthesisStack.Push(token);
                 }
-                if (expression[arrayIndex] == ')')
+                if (token.Type == TokenType.ClosingParenthesis)
                 {
                     if(parenthesisStack.Count == 0) 
                     {
@@ -172,7 +217,7 @@ namespace AlgebraLibrary
                 return;
             }
             //Decimal Handeling
-            else if (index < expression.Length - 1 && (expression[index + 1] == '.'))
+            else if (index < expression.Length - 1 && ((int)expression[index + 1] == 46))
             {
                 return;
             }
@@ -197,7 +242,6 @@ namespace AlgebraLibrary
         }
         public List<Token> ConvertToTokens(string inFixExpression)
         {
-            ParenthesisMatcher(inFixExpression);
             List<Token> tokenizedExpression = new List<Token>();
             string operatorName = string.Empty;
             OperatorCheck(inFixExpression);
@@ -220,6 +264,7 @@ namespace AlgebraLibrary
         {
             List<Token> postFixTokens = new List<Token>();
             List<Token> inFixTokens = ConvertToTokens(inFixExpression);
+            ParenthesisMatcher(inFixTokens);
             Stack<Token> operatorStack = new Stack<Token>();
             OperatorCheck(inFixTokens);
             foreach (Token token in inFixTokens)

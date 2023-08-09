@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
+using System.Reflection;
 
 namespace AlgebraLibrary
 {
@@ -13,8 +16,17 @@ namespace AlgebraLibrary
         private static List<Token> _convertertedExpression = new List<Token>();
         private Dictionary<Token, IOperation> _operatorInfo = new Dictionary<Token, IOperation>();
         public ExpressionEvaluator() 
-        {
-            
+        {           
+            List<ConfigureClass> tokens = new List<ConfigureClass>();
+            string filePath = "Properties\\ConfigurationFile.json";
+            string fileName = File.ReadAllText(filePath);
+            tokens = JsonConvert.DeserializeObject<List<ConfigureClass>>(fileName);
+            foreach (var token in tokens)
+            {
+                Type classType = Type.GetType(token.ClassName);
+                object instance = Activator.CreateInstance(classType);
+                _operatorInfo.Add(new Token(token.Symbol, token.Type, token.Precedence), (IOperation)instance);
+            }
         }
         public ExpressionEvaluator(Dictionary<Token, IOperation> _operatorInfo)
         {
@@ -35,14 +47,7 @@ namespace AlgebraLibrary
                     double[] operands = new double[_operatorInfo[token].OperandCount];
                     for (int arrayIndex = operands.Length -1; arrayIndex >= 0 ; arrayIndex--)
                     {
-                        try
-                        {
                             operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
-                        }
-                        catch
-                        {
-                            operands[arrayIndex] = 0;
-                        }
                     }
                     evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
                 }
@@ -51,21 +56,7 @@ namespace AlgebraLibrary
                     double[] operands = new double[_operatorInfo[token].OperandCount];
                     for (int arrayIndex = operands.Length-1; arrayIndex >= 0; arrayIndex--)
                     {
-                        try
-                        {
                             operands[arrayIndex] = Convert.ToDouble(evaluatorStack.Pop().Symbol);
-                        }
-                        catch
-                        {
-                            if (token.Symbol.Equals(Resources.Plus) || token.Symbol.Equals(Resources.Minus))
-                            {
-                                operands[arrayIndex] = 0;
-                            }
-                            else if(token.Symbol.Equals(Resources.Multiply))
-                            {
-                                operands[arrayIndex] = 1;
-                            }
-                        }
                     }
                     evaluatorStack.Push(new Token(_operatorInfo[token].Evaluate(operands).ToString(), TokenType.Number, 1));
                 }

@@ -52,6 +52,7 @@ namespace AlgebraLibrary
         UnaryOperator,
         BinaryOperator,
         Number,
-        Parenthesis
+        OpeningParenthesis,
+        ClosingParenthesis
     }
 }
