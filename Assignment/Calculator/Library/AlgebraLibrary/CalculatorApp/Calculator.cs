@@ -168,9 +168,6 @@ namespace CalculatorApp
                     break;
 
                 case "Number":
-                    _calculatorScreen.Text += clickedButton.Text;
-                    break;
-
                 case "Operator":
                     _calculatorScreen.Text += clickedButton.Text;
                     break;
