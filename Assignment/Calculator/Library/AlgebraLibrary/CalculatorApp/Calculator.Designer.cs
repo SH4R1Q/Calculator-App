@@ -1,6 +1,6 @@
 ﻿namespace CalculatorApp
 {
-    partial class Claculator
+    partial class Calculator
     {
         /// <summary>
         /// Required designer variable.
@@ -30,19 +30,18 @@
         {
             this.SuspendLayout();
             // 
-            // Claculator
+            // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(10)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(768, 491);
-            this.Name = "Claculator";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Claculator_Load);
+            this.Name = "Calculator";
+            this.Text = "Calculator";
             this.ResumeLayout(false);
 
         }
-
-        #endregion
+        #endregion;
     }
 }
 
