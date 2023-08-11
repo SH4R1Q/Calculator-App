@@ -1,0 +1,132 @@
+[
+  {
+    "TextShown": "=",
+    "Meaning": "=",
+    "Type": 2
+  },
+  {
+    "TextShown": "C",
+    "Meaning": "Clear Screen",
+    "Type": 3
+  },
+  {
+    "TextShown": "Ans",
+    "Meaning": "LastAnswer",
+    "Type": 5
+  },
+  {
+    "TextShown": "<-",
+    "Meaning": "BackSpace",
+    "Type": 4
+  },
+  {
+    "TextShown": "M+",
+    "Meaning": "Add Memory",
+    "Type": 6
+  },
+  {
+    "TextShown": "M-",
+    "Meaning": "Subtract Memory",
+    "Type": 7
+  },
+  {
+    "TextShown": "MS",
+    "Meaning": "Save Memory",
+    "Type": 8
+  },
+  {
+    "TextShown": "MR",
+    "Meaning": "Read Memory",
+    "Type": 9
+  },
+  {
+    "TextShown": "MC",
+    "Meaning": "Clear Memory",
+    "Type": 10
+  },
+  {
+    "TextShown": "AC",
+    "Meaning": "All Clear",
+    "Type": 11
+  },
+  {
+    "TextShown": "+",
+    "Meaning": "+",
+    "Type": 0
+  },
+  {
+    "TextShown": "-",
+    "Meaning": "-",
+    "Type": 0
+  },
+  {
+    "TextShown": "×",
+    "Meaning": "*",
+    "Type": 0
+  },
+  {
+    "TextShown": "÷",
+    "Meaning": "/",
+    "Type": 0
+  },
+  {
+    "TextShown": "^",
+    "Meaning": "^",
+    "Type": 0
+  },
+  {
+    "TextShown": "%",
+    "Meaning": "%",
+    "Type": 0
+  },
+  {
+    "TextShown": "ज्या",
+    "Meaning": "sin",
+    "Type": 0
+  },
+  {
+    "TextShown": "कोज्या",
+    "Meaning": "cos",
+    "Type": 0
+  },
+  {
+    "TextShown": "स्पर्शज्या",
+    "Meaning": "tan",
+    "Type": 0
+  },
+  {
+    "TextShown": "क्रमगुणित",
+    "Meaning": "fact",
+    "Type": 0
+  },
+  {
+    "TextShown": "√",
+    "Meaning": "sqrt",
+    "Type": 0
+  },
+  {
+    "TextShown": "लघुगणक₁₀",
+    "Meaning": "log",
+    "Type": 0
+  },
+  {
+    "TextShown": "लघुगणकe",
+    "Meaning": "ln",
+    "Type": 0
+  },
+  {
+    "TextShown": "⅟",
+    "Meaning": "rcp",
+    "Type": 0
+  },
+  {
+    "TextShown": "(",
+    "Meaning": "(",
+    "Type": 0
+  },
+  {
+    "TextShown": ")",
+    "Meaning": ")",
+    "Type": 0
+  }
+]

@@ -12,30 +12,33 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
-
+using CalculatorApp;
 
 namespace CalculatorApp
 {
     public partial class Calculator : Form
     {
         TableLayoutPanel _numberSet = new TableLayoutPanel();
-        Button _evaluateButton = new Button();
-        Button _clearButton = new Button();
-        Button _backspaceButton = new Button();
+        ButtonInfo _evaluateButton = new ButtonInfo();
+        ButtonInfo _clearButton = new ButtonInfo();
+        ButtonInfo _backspaceButton = new ButtonInfo();
         GroupBox _calculatorControls = new GroupBox();
         FlowLayoutPanel _operatorSet = new FlowLayoutPanel();
         TextBox _calculatorScreen = new TextBox();
+        TextBox _expression = new TextBox();
         TextBox _memory = new TextBox();
         ExpressionEvaluator _expressionEvaluator = new ExpressionEvaluator();
         Button _prevAnswer = new Button();
         Stack<Double> _memoryStack = new Stack<Double>();
         double _result;
         double _prevResult;
+        static List<ButtonInfo> _buttonInfo = new List<ButtonInfo>();
 
         public Calculator()
         {
             InitializeComponent();
-
+            string fileName = File.ReadAllText("Properties\\ConfigureUI.json");
+            _buttonInfo= JsonConvert.DeserializeObject<List<ButtonInfo>>(fileName);
             // Calculator Screen
 
             _calculatorScreen.Location = new Point(10, 10);
@@ -49,12 +52,16 @@ namespace CalculatorApp
             _calculatorScreen.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Bottom; 
             this.Controls.Add(_calculatorScreen);
 
-            // Execute Button
+            // Expression Screen
 
-            _evaluateButton = CreateButton("=","Evaluate Button");
-            _evaluateButton.Dock = DockStyle.Fill;
-            _evaluateButton.Click += new EventHandler(EvaluateExpression);
-            _numberSet.Controls.Add(_evaluateButton, 2, 4);
+            _expression.Location = new Point(10, 80);
+            _expression.Size = new Size(730, 50);
+            _expression.Font = new Font(_expression.Font.Name, 10);
+            _expression.BackColor = Color.FromArgb(30, 30, 50);
+            _expression.ForeColor = Color.White;
+            _expression.Cursor = Cursors.Arrow;
+            _expression.BorderStyle = BorderStyle.FixedSingle;
+            _calculatorControls.Controls.Add( _expression);
 
             // Calculator Control
 
@@ -93,21 +100,7 @@ namespace CalculatorApp
             _numberSet.Size = new Size(260,300);
             this._calculatorControls.Controls.Add(_numberSet);
             _numberSet.Anchor = AnchorStyles.Bottom | AnchorStyles.Right  ;
-            InitializeNumberSet();
 
-            // Clear Button 
-
-            _clearButton = CreateButton("C", "Clear All");
-            _clearButton.Dock = DockStyle.Fill;
-            _clearButton.Click += new EventHandler(ButtonClick);
-            _numberSet.Controls.Add(_clearButton, 0, 0);
-
-            // Back Space Button
-
-            _backspaceButton = CreateButton("<-","Back Space");
-            _backspaceButton.Dock = DockStyle.Fill;
-            _backspaceButton.Click += new EventHandler(ButtonClick);
-            _numberSet.Controls.Add(_backspaceButton, 2, 0);
 
             // Operator Set
 
@@ -116,26 +109,26 @@ namespace CalculatorApp
             _operatorSet.BackColor = Color.FromArgb(0, 10, 40);
             this._calculatorControls.Controls.Add(_operatorSet);
             _operatorSet.Anchor = AnchorStyles.Bottom | AnchorStyles.Left ;
-            InitializeOperatorSet();
 
-            // Previous Answer
+            InitializeCalculatorControls();
 
-            _prevAnswer = CreateButton("Ans", "Previous Answer");
-            _prevAnswer.Dock = DockStyle.Fill;
-            _prevAnswer.Click += new EventHandler(ButtonClick);
-            _numberSet.Controls.Add(_prevAnswer, 1, 0);
         }
+        public delegate void EventDelegate(object sender, EventArgs e);
         private void EvaluateExpression(object sender, EventArgs e)
         {
             try
             {                
-                _result = _expressionEvaluator.Evaluate(_calculatorScreen.Text);
+                _result = _expressionEvaluator.Evaluate(_calculatorScreen.Name);
                 _calculatorScreen.Text = _result.ToString();
+                _calculatorScreen.Name = _result.ToString();
+                _expression.Text = _calculatorScreen.Name;
                 _prevResult = _result;
             }
             catch (Exception exception)
             {
                 _calculatorScreen.Text = exception.Message;
+                _calculatorScreen.Name = exception.Message;
+                _expression.Text = String.Empty;
                 _result = 0;
             }
         }
@@ -148,11 +141,11 @@ namespace CalculatorApp
                 for(int rows = 0; rows < _numberSet.RowCount; rows++)
                 {
                     if(rows == 0 || (columns == _numberSet.ColumnCount-1 && rows == _numberSet.RowCount-1)) { continue; }
-                    Button btn = new Button();
-                    btn = CreateButton(numberSetArray[arrayIndex++].ToString(),"Number");
+                    ButtonInfo btn = new ButtonInfo();
+                    btn = CreateButton(numberSetArray[arrayIndex].ToString(), numberSetArray[arrayIndex].ToString(),ButtonType.Number,ButtonClick);
                     btn.Dock = DockStyle.Fill;
-                    btn.Click += new EventHandler(ButtonClick);
                     _numberSet.Controls.Add(btn, columns, rows);
+                    arrayIndex++;
                     btn = null;
                 }
             }
@@ -160,71 +153,88 @@ namespace CalculatorApp
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            switch (clickedButton.Name)
+            ButtonInfo clickedButton = (ButtonInfo)sender;
+            switch (clickedButton.Type)
             {
-                case "Clear All":
+                case ButtonType.Clear:
                     _calculatorScreen.Clear();
+                    _calculatorScreen.Name = string.Empty;
+                    _expression.Text = _calculatorScreen.Name;
                     break;
 
-                case "Number":
-                case "Operator":
+                case ButtonType.Number:
+                case ButtonType.Operator:
                     _calculatorScreen.Text += clickedButton.Text;
+                    _calculatorScreen.Name += clickedButton.Name;
+                    _expression.Text = _calculatorScreen.Name;
                     break;
 
-                case "Back Space":
-                    if (_calculatorScreen.Text.Length == 0) { break; }
+                case ButtonType.BackSpace:
+                    if (_calculatorScreen.Name.Length == 0) { break; }
                     _calculatorScreen.Text = _calculatorScreen.Text.Substring(0, _calculatorScreen.Text.Length - 1);
+                    _calculatorScreen.Name = _calculatorScreen.Name.Substring(0, _calculatorScreen.Name.Length - 1);
+                    _expression.Text = _calculatorScreen.Name;
                     break;
 
-                case "Previous Answer":
+                case ButtonType.PreiousAnswer:
                     _calculatorScreen.Text += _prevResult.ToString();
+                    _calculatorScreen.Name += _prevResult.ToString();
+                    _expression.Text = _calculatorScreen.Name;
                     break;
 
-                case "Add Memory":
-                    if (!double.TryParse(_calculatorScreen.Text, out double number1)) { break; }
+                case ButtonType.AddMemory:
+                    if (_memoryStack.Count == 0 || !double.TryParse(_calculatorScreen.Name, out double number1)) { break; }
                     double add = _memoryStack.Pop();
-                    add += Convert.ToDouble(_calculatorScreen.Text);
+                    add += Convert.ToDouble(_calculatorScreen.Name);
                     _memoryStack.Push(add);
                     _memory.Text = _memoryStack.Peek().ToString();
+                    _memory.Name = _memoryStack.Peek().ToString();
                     break;
 
-                case "Subtract Memory":
-                    if (!double.TryParse(_calculatorScreen.Text, out double number2)) { break; }
+                case ButtonType.SubtractMemory:
+                    if (_memoryStack.Count == 0 || !double.TryParse(_calculatorScreen.Name, out double number2)) { break; }
                     double subtract = _memoryStack.Pop();
-                    subtract -= Convert.ToDouble(_calculatorScreen.Text);
+                    subtract -= Convert.ToDouble(_calculatorScreen.Name);
                     _memoryStack.Push(subtract);
                     _memory.Text = _memoryStack.Peek().ToString();
+                    _memory.Name = _memoryStack.Peek().ToString();
                     break;
 
-                case "Save Memory":
-                    if(!double.TryParse(_calculatorScreen.Text, out double number3)) { break; }
-                    _memoryStack.Push(Convert.ToDouble(_calculatorScreen.Text));
+                case ButtonType.SaveMemory:
+                    if(!double.TryParse(_calculatorScreen.Name, out double number3)) { break; }
+                    _memoryStack.Push(Convert.ToDouble(_calculatorScreen.Name));
                     _memory.Text = _memoryStack.Peek().ToString();
+                    _memory.Name = _memoryStack.Peek().ToString();
                     break;
 
-                case "Read Memory":
-                    if (!double.TryParse(_memory.Text, out double number4)) { break; }
+                case ButtonType.ReadMemory:
+                    if (!double.TryParse(_memory.Name, out double number4)) { break; }
                     _calculatorScreen.Text += _memory.Text;
+                    _calculatorScreen.Name += _memory.Name;
+                    _expression.Text += _calculatorScreen.Name;
                     break;
 
-                case "Clear Memory":
+                case ButtonType.ClearMemory:
                     _memoryStack.Clear();
                     _memory.Text = String.Empty;
+                    _memory.Name = String.Empty;
                     break;
 
-                case "All Clear":
+                case ButtonType.AllClear:
                     _memoryStack.Clear();
                     _memory.Text = String.Empty;
+                    _memory.Name = String.Empty;
                     _calculatorScreen.Text = String.Empty;
+                    _calculatorScreen.Name = String.Empty;
+                    _expression.Text = _calculatorScreen.Name;
                     _prevResult = 0;
                     _result = 0;
                     break;
             }
         }
-        private Button CreateButton(string text,string name)
+        private ButtonInfo CreateButton(string text,string name,ButtonType type ,EventDelegate eventName)
         {
-            Button newButton = new Button
+            ButtonInfo newButton = new ButtonInfo
             {
                 Size = new Size(70,70),
                 BackColor = Color.DimGray,
@@ -235,41 +245,72 @@ namespace CalculatorApp
             newButton.FlatAppearance.BorderSize = 0;
             newButton.Text = text;
             newButton.Name = name;
+            newButton.Type = type;
+            newButton.Click += new EventHandler(eventName);
             return newButton;
         }
-        private void InitializeOperatorSet()
+        private void InitializeOperatorSet(ButtonInfo newButton)
         {
-            List<ConfigureClass> operators = new List<ConfigureClass>();
-            string fileName = File.ReadAllText("Properties\\ConfigurationFile.json");
-            operators = JsonConvert.DeserializeObject<List<ConfigureClass>>(fileName);
+            List<ConfigureClass> operators = PostfixConverter.ValidTokens;
             foreach(ConfigureClass token in operators)
             {
-                Button newButton = CreateButton(token.Symbol,"Operator");
-                newButton.Size = new Size(70,70);
-                newButton.Click += new EventHandler(ButtonClick);
-                _operatorSet.Controls.Add(newButton);
-                newButton = null;
+                if (token.Symbol.Equals(newButton.Meaning))
+                {
+                    _operatorSet.Controls.Add(CreateButton(newButton.TextShown, token.Symbol, ButtonType.Operator, ButtonClick));
+                }
             }
-            Button memoryButtons;
-            memoryButtons = CreateButton("M+", "Add Memory");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = CreateButton("M-", "Subtract Memory");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = CreateButton("MS", "Save Memory");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = CreateButton("MR", "Read Memory");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = CreateButton("MC", "Clear Memory");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = CreateButton("AC", "All Clear");
-            memoryButtons.Click += new EventHandler(ButtonClick);
-            _operatorSet.Controls.Add(memoryButtons);
-            memoryButtons = null;
+        }
+        private void InitializeCalculatorControls()
+        {
+            InitializeNumberSet();
+            foreach(ButtonInfo button in _buttonInfo)
+            {
+                switch (button.Type)
+                {
+                    case ButtonType.Evaluate:
+                        _evaluateButton = CreateButton(button.TextShown, "=", ButtonType.Evaluate, EvaluateExpression);
+                        _evaluateButton.Dock = DockStyle.Fill;
+                        _numberSet.Controls.Add(_evaluateButton, 2, 4);
+                        break;
+                    case ButtonType.Clear:
+                        _clearButton = CreateButton(button.TextShown, "C", ButtonType.Clear, ButtonClick);
+                        _clearButton.Dock = DockStyle.Fill;
+                        _numberSet.Controls.Add(_clearButton, 0, 0);
+                        break;
+                    case ButtonType.BackSpace:
+                        _backspaceButton = CreateButton(button.TextShown, "<-", ButtonType.BackSpace, ButtonClick);
+                        _backspaceButton.Dock = DockStyle.Fill;
+                        _numberSet.Controls.Add(_backspaceButton, 2, 0);
+                        break;
+                    case ButtonType.PreiousAnswer:
+                        _prevAnswer = CreateButton(button.TextShown, "Ans", ButtonType.PreiousAnswer, ButtonClick);
+                        _prevAnswer.Dock = DockStyle.Fill;
+                        _numberSet.Controls.Add(_prevAnswer, 1, 0);
+                        break;
+                    case ButtonType.AddMemory:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "M+", ButtonType.AddMemory, ButtonClick));
+                        break;
+                    case ButtonType.SubtractMemory:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "M-", ButtonType.SubtractMemory, ButtonClick)); 
+                        break;
+                    case ButtonType.SaveMemory:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "MS", ButtonType.SaveMemory, ButtonClick)); 
+                        break;
+                    case ButtonType.ReadMemory:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "MR", ButtonType.ReadMemory, ButtonClick)); 
+                        break;
+                    case ButtonType.ClearMemory:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "MC", ButtonType.ClearMemory, ButtonClick)); 
+                        break;
+                    case ButtonType.AllClear:
+                        _operatorSet.Controls.Add(CreateButton(button.TextShown, "AC", ButtonType.AllClear, ButtonClick)); 
+                        break;
+                    case ButtonType.Operator:
+                        InitializeOperatorSet(button);
+                        break;
+                }
+            }
+
         }
     }
 }

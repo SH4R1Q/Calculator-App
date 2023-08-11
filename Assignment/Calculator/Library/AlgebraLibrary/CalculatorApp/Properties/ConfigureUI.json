@@ -1,0 +1,132 @@
+[
+  {
+    "TextShown": "=",
+    "Meaning": "=",
+    "Type": 2
+  },
+  {
+    "TextShown": "X",
+    "Meaning": "Clear Screen",
+    "Type": 3
+  },
+  {
+    "TextShown": "Ans",
+    "Meaning": "LastAnswer",
+    "Type": 5
+  },
+  {
+    "TextShown": "<-",
+    "Meaning": "BackSpace",
+    "Type": 4
+  },
+  {
+    "TextShown": "M+",
+    "Meaning": "Add Memory",
+    "Type": 6
+  },
+  {
+    "TextShown": "M-",
+    "Meaning": "Subtract Memory",
+    "Type": 7
+  },
+  {
+    "TextShown": "MS",
+    "Meaning": "Save Memory",
+    "Type": 8
+  },
+  {
+    "TextShown": "MR",
+    "Meaning": "Read Memory",
+    "Type": 9
+  },
+  {
+    "TextShown": "MC",
+    "Meaning": "Clear Memory",
+    "Type": 10
+  },
+  {
+    "TextShown": "AC",
+    "Meaning": "All Clear",
+    "Type": 11
+  },
+  {
+    "TextShown": "+",
+    "Meaning": "+",
+    "Type": 0
+  },
+  {
+    "TextShown": "-",
+    "Meaning": "-",
+    "Type": 0
+  },
+  {
+    "TextShown": "×",
+    "Meaning": "*",
+    "Type": 0
+  },
+  {
+    "TextShown": "÷",
+    "Meaning": "/",
+    "Type": 0
+  },
+  {
+    "TextShown": "^",
+    "Meaning": "^",
+    "Type": 0
+  },
+  {
+    "TextShown": "%",
+    "Meaning": "%",
+    "Type": 0
+  },
+  {
+    "TextShown": "Sin",
+    "Meaning": "sin",
+    "Type": 0
+  },
+  {
+    "TextShown": "Cos",
+    "Meaning": "cos",
+    "Type": 0
+  },
+  {
+    "TextShown": "Tan",
+    "Meaning": "tan",
+    "Type": 0
+  },
+  {
+    "TextShown": "fact",
+    "Meaning": "fact",
+    "Type": 0
+  },
+  {
+    "TextShown": "√",
+    "Meaning": "sqrt",
+    "Type": 0
+  },
+  {
+    "TextShown": "log",
+    "Meaning": "log",
+    "Type": 0
+  },
+  {
+    "TextShown": "ln",
+    "Meaning": "ln",
+    "Type": 0
+  },
+  {
+    "TextShown": "⅟",
+    "Meaning": "rcp",
+    "Type": 0
+  },
+  {
+    "TextShown": "(",
+    "Meaning": "(",
+    "Type": 0
+  },
+  {
+    "TextShown": ")",
+    "Meaning": ")",
+    "Type": 0
+  }
+]

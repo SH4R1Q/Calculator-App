@@ -11,6 +11,7 @@ namespace AlgebraLibrary
     public class PostfixConverter
     {
         private static List<ConfigureClass> _validTokens =  new List<ConfigureClass>();
+        public static List<ConfigureClass> ValidTokens { get { return _validTokens; } }
         public PostfixConverter()
         {
             string filePath = "Properties\\ConfigurationFile.json";
