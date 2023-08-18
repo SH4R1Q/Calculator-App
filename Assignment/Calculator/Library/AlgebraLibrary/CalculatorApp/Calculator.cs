@@ -19,26 +19,26 @@ namespace CalculatorApp
     public partial class Calculator : Form
     {
         TableLayoutPanel _numberSet = new TableLayoutPanel();
-        ButtonInfo _evaluateButton = new ButtonInfo();
-        ButtonInfo _clearButton = new ButtonInfo();
-        ButtonInfo _backspaceButton = new ButtonInfo();
+        CalculatorButton _evaluateButton = new CalculatorButton();
+        CalculatorButton _clearButton = new CalculatorButton();
+        CalculatorButton _backspaceButton = new CalculatorButton();
+        CalculatorButton _selectLanguage  = new CalculatorButton();
         GroupBox _calculatorControls = new GroupBox();
         FlowLayoutPanel _operatorSet = new FlowLayoutPanel();
         TextBox _calculatorScreen = new TextBox();
         TextBox _expression = new TextBox();
         TextBox _memory = new TextBox();
         ExpressionEvaluator _expressionEvaluator = new ExpressionEvaluator();
-        Button _prevAnswer = new Button();
+        CalculatorButton _prevAnswer = new CalculatorButton();
         Stack<Double> _memoryStack = new Stack<Double>();
         double _result;
         double _prevResult;
-        static List<ButtonInfo> _buttonInfo = new List<ButtonInfo>();
+        static List<CalculatorButton> _buttonInfo = new List<CalculatorButton>();
 
         public Calculator()
         {
             InitializeComponent();
-            string fileName = File.ReadAllText("Properties\\ConfigureUI.json");
-            _buttonInfo= JsonConvert.DeserializeObject<List<ButtonInfo>>(fileName);
+            InitializeLanguage();
             // Calculator Screen
 
             _calculatorScreen.Location = new Point(10, 10);
@@ -69,6 +69,11 @@ namespace CalculatorApp
             _calculatorControls.Size = new Size(750, 420);
             _calculatorControls.Anchor = AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left;
             this.Controls.Add((GroupBox)_calculatorControls);
+
+            // Select Language
+
+
+
 
             //  Memory
 
@@ -114,6 +119,11 @@ namespace CalculatorApp
 
         }
         public delegate void EventDelegate(object sender, EventArgs e);
+        private void InitializeLanguage()
+        {
+            string fileName = File.ReadAllText("Properties\\ConfigureUIHindi.json");
+            _buttonInfo = JsonConvert.DeserializeObject<List<CalculatorButton>>(fileName);
+        }
         private void EvaluateExpression(object sender, EventArgs e)
         {
             try
@@ -141,7 +151,7 @@ namespace CalculatorApp
                 for(int rows = 0; rows < _numberSet.RowCount; rows++)
                 {
                     if(rows == 0 || (columns == _numberSet.ColumnCount-1 && rows == _numberSet.RowCount-1)) { continue; }
-                    ButtonInfo btn = new ButtonInfo();
+                    CalculatorButton btn = new CalculatorButton();
                     btn = CreateButton(numberSetArray[arrayIndex].ToString(), numberSetArray[arrayIndex].ToString(),ButtonType.Number,ButtonClick);
                     btn.Dock = DockStyle.Fill;
                     _numberSet.Controls.Add(btn, columns, rows);
@@ -153,7 +163,7 @@ namespace CalculatorApp
 
         private void ButtonClick(object sender, EventArgs e)
         {
-            ButtonInfo clickedButton = (ButtonInfo)sender;
+            CalculatorButton clickedButton = (CalculatorButton)sender;
             switch (clickedButton.Type)
             {
                 case ButtonType.Clear:
@@ -232,9 +242,9 @@ namespace CalculatorApp
                     break;
             }
         }
-        private ButtonInfo CreateButton(string text,string name,ButtonType type ,EventDelegate eventName)
+        private CalculatorButton CreateButton(string text,string name,ButtonType type ,EventDelegate eventName)
         {
-            ButtonInfo newButton = new ButtonInfo
+            CalculatorButton newButton = new CalculatorButton
             {
                 Size = new Size(70,70),
                 BackColor = Color.DimGray,
@@ -249,7 +259,7 @@ namespace CalculatorApp
             newButton.Click += new EventHandler(eventName);
             return newButton;
         }
-        private void InitializeOperatorSet(ButtonInfo newButton)
+        private void InitializeOperatorSet(CalculatorButton newButton)
         {
             List<ConfigureClass> operators = PostfixConverter.ValidTokens;
             foreach(ConfigureClass token in operators)
@@ -263,7 +273,7 @@ namespace CalculatorApp
         private void InitializeCalculatorControls()
         {
             InitializeNumberSet();
-            foreach(ButtonInfo button in _buttonInfo)
+            foreach(CalculatorButton button in _buttonInfo)
             {
                 switch (button.Type)
                 {

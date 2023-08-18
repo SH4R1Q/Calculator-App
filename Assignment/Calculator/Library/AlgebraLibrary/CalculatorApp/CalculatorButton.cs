@@ -8,19 +8,19 @@ using System.Windows.Forms;
 
 namespace CalculatorApp
 {
-    public class ButtonInfo : Button
+    public class CalculatorButton : Button
     {
 
         private string _textShown;
         private string _meaning;
         private ButtonType _type;
 
-        public ButtonInfo(string symbol, ButtonType type)
+        public CalculatorButton(string symbol, ButtonType type)
         {
             _textShown = symbol;
             _type = type;
         }
-        public ButtonInfo()
+        public CalculatorButton()
         {
             _textShown = String.Empty;
         }
@@ -41,7 +41,7 @@ namespace CalculatorApp
         }
         public override bool Equals(object obj)
         {
-            if (obj is ButtonInfo typeToken)
+            if (obj is CalculatorButton typeToken)
             {
                 return TextShown == typeToken.TextShown && Type == typeToken.Type;
             }
